@@ -1,37 +1,37 @@
-// Optional Values in parameter
-function generateError(msg?: string) {
-    throw new Error(msg)
-}
-
-generateError("An error occured") // Automatic Semicolon Insertion pitfall - add ; to explicitly tell that this is a function
-// generateError()
-
-
 (() => {
-    // Optional Values in object properties
+    // 1️⃣ Optional parameter in function
+    function generateError(msg?: string): never {
+        throw new Error(msg ?? "Unknown error occurred");
+    }
+
+    // Safe call
+    // generateError(); // Uncomment to test default error
+    generateError("An error occurred"); // Example call
+
+    // 2️⃣ Optional property in object
     type User = {
         name: string;
         age: number;
-        role?: 'admin' | 'guess'
-    }
+        role?: 'admin' | 'guest'; // optional property
+    };
 
-    let user: User = {
-        name: 'Elmer',
-        age: 31
-    }
+    const user: User = {
+        name: 'Czarina',
+        age: 22
+        // role is optional
+    };
 
-    user.name
-    user.age
-})
+    console.log(user.name); // Always safe
+    console.log(user.age);
+    console.log(user.role); // Might be undefined
 
-// Nullish Coalescing `??` operator 
-let input = ''
-const didProvideInput = input ?? false;
+    // 3️⃣ Nullish Coalescing operator
+    let input = '';
+    const didProvideInput = input ?? false; // Only replaces null or undefined
 
-// try it on browser console log to see results
-// update it `??` to `||`
-// `||` check for falsy not false - falsy = null, undefined, 0, empty string, etc
-// ?? check only if null or undefined
+    console.log(`Input provided? ${didProvideInput}`);
 
-// Use || when you want to fall back on any falsy value.
-// Use ?? when you only want to fall back on null or undefined.
+    // Difference from || operator:
+    const fallbackOr = input || false; // Replaces any falsy value: '', 0, null, undefined, false
+    console.log(`Fallback with ||: ${fallbackOr}`);
+})();

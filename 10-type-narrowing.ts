@@ -1,23 +1,26 @@
-const inputEl = document.getElementById('user-name')
+(() => {
+    // Get input element (may be null)
+    const inputEl = document.getElementById('user-name');
 
-console.log(inputEl.value) // This line is unsafe because inputEl might be null
+    // Unsafe access (don't do this)
+    // console.log(inputEl.value); // Error if null
 
-if (!inputEl) {
-    throw new Error('Element not found!');
-}
+    // 1️⃣ Safe null check
+    if (!inputEl) {
+        throw new Error('Element not found!');
+    }
+    console.log(`Value after null check: ${inputEl.value}`);
 
-console.log(inputEl.value)
+    // 2️⃣ Non-null assertion operator
+    const inputElNonNull = document.getElementById('user-name')!; // TypeScript trusts it exists
+    console.log(`Non-null assertion value: ${inputElNonNull.value}`);
 
-// You can convince TypeScript that you are sure the value will not be null by using the non-null assertion operator `!`
-// You can use the optional chaining `?.` operator to safely check if value is not null before the next operation
+    // 3️⃣ Optional chaining
+    console.log(`Optional chaining value: ${inputEl?.value}`);
 
-// const inputEl = document.getElementById('user-name')!
-// console.log(inputEl!.value)
-// if (!inputEl) {
-//     throw new Error('Element not found!');
-// }
-// console.log(inputEl?.value)
-
-
-// Type Casting or Assertion
-// const inputEl = document.getElementById('user-name') as HTMLInputElement | null
+    // 4️⃣ Type assertion (tell TypeScript the element is HTMLInputElement)
+    const inputElCast = document.getElementById('user-name') as HTMLInputElement | null;
+    if (inputElCast) {
+        console.log(`Type assertion value: ${inputElCast.value}`);
+    }
+})();
