@@ -1,18 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="10-type-narrowing.js" defer></script>
-</head>
-<body>
-    <form>
-        <p>
-            <label>Your name</label>
-            <input type="text" id="user-name" />
-        </p>
-        <button>Submit</button>
-    </form>
-</body>
-</html>
+(() => {
+    // Get input element from DOM
+    const userInput = document.getElementById('user-name');
+
+    // Type Narrowing: check if element is HTMLInputElement before accessing value
+    if (userInput instanceof HTMLInputElement) {
+        userInput.addEventListener('input', (event) => {
+            console.log(`Current input: ${userInput.value}`);
+        });
+    }
+
+    // Optional: handle form submission safely
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            if (userInput instanceof HTMLInputElement) {
+                alert(`Hello, ${userInput.value}!`);
+            }
+        });
+    }
+})();
