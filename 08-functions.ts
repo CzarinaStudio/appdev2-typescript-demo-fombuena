@@ -1,57 +1,47 @@
 (() => {
 
     // Function Return Value Types
-    function add(a: number, b: number): number { // you can omit the function type since typescript can infers it
+    function add(a: number, b: number): number {
         return a + b
     }
 
-    add(5, 10)
-    // add("5", 10)
+    console.log(add(5, 10)) // 15
+    // console.log(add("5", 10)) // Error: Type 'string' is not assignable to type 'number'
 
-    // Special Type `void` - return nothing
-    // Function doesn't return a meaningful value, but it does finish
+    // Special Type `void` - function returns nothing
     function log(message: string): void {
         console.log(message)
     }
 
-    log("Hello, World!")
+    log("Hello, TypeScript!")
 
-    // Another Special Type `never`
-    // Function never finishes normally (throws error, infinite loop)
-    function logAndThrow(errorMessage: string) {
+    // Special Type `never` - function never finishes normally
+    function logAndThrow(errorMessage: string): never {
         console.log(errorMessage)
         throw new Error(errorMessage)
     }
 
-    // Function as Types
-    // Useful for callback functions
-    // () => {} is not same as () => void
-    // () => {} - arrow function
-    // () => void - function type
-    function performJob(cb: (m: string) => void) {  // you can also use cb: Function but () => void is the best practice
-        // ...
-        cb('Job Done!')
+    // Function as Types (for callbacks)
+    function performJob(cb: (msg: string) => void) {
+        cb('Job Completed!')
     }
 
-    let logMsg = (msg: string): void => {
+    const logMsg = (msg: string): void => {
         console.log(msg)
     }
 
     performJob(logMsg)
 
-    // Useful for objects and methods
+    // Object with method
     type User = {
-        name: string;
-        age: number;
-        greet: () => string;
+        name: string
+        age: number
+        greet: () => string
     }
 
-    let user: User = {
-        name: "Elmer",
-        age: 39,
-        // greet: function() {
-        //     return this.name
-        // }
+    const user: User = {
+        name: "Czarina",
+        age: 22,
         greet() {
             console.log(`Hello, ${this.name}`)
             return this.name
@@ -59,4 +49,5 @@
     }
 
     user.greet()
-})
+
+})()
