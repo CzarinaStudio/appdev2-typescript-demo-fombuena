@@ -1,21 +1,38 @@
 (() => {
     // Type Aliases or Custom Types
-    // use `type` keyword to create custom type
-    type Role = 'admin' | 'guess' | 'teacher' | 'student'
+    type Role = 'admin' | 'guest' | 'teacher' | 'student';
 
     // Complex Object Type Definition
     type User = {
         name: string;
         age: number;
-        role: Role; // you can use as well the Role type in Object type
-        permission: string[];
+        role: Role;
+        permissions: string[];
+    };
+
+    // Example Users
+    const adminUser: User = {
+        name: 'Czarina',
+        age: 22,
+        role: 'admin',
+        permissions: ['read', 'write', 'delete']
+    };
+
+    const studentUser: User = {
+        name: 'Alex',
+        age: 20,
+        role: 'student',
+        permissions: ['read']
+    };
+
+    // Function to check access
+    function access(user: User) {
+        console.log(`${user.name} has the following permissions:`);
+        user.permissions.forEach(p => console.log(`- ${p}`));
     }
 
-    let userRole: Role = 'admin'
+    // Call function
+    access(adminUser);
+    access(studentUser);
 
-    // ...
-
-    function access(role: Role) {
-        // ...
-    }
-})
+})();
